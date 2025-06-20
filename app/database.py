@@ -20,3 +20,15 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # 5. Creamos una clase "Base". Nuestros modelos de tablas heredarán de ella.
 Base = declarative_base()
+
+# 6. Función para obtener la sesión de base de datos
+def get_db():
+    """
+    Generador que proporciona una sesión de base de datos.
+    Se asegura de que la sesión se cierre correctamente después de usarla.
+    """
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
